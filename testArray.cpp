@@ -25,7 +25,7 @@
 /// итератор в обратном порядке -- reverse_iterator
 
 
-#define USE_STL_VECTOR 1
+#define USE_STL_VECTOR 0
 #define USE_TEMPLATED_REALIZATION 1
 
 
@@ -67,6 +67,9 @@ void testConstructorsAndAssignment() {
 	assert(b == c);
 	b = e;
 	assert(c == tmp);
+	
+	b = b;
+	assert(b == e);
 }
 
 
@@ -147,7 +150,7 @@ void testExceptions() {
 	try {
 		a.at(2) = 3;
 	} catch (Exception& e) {
-		// std::cout << "Exception was thrown: " << e.what() << std::endl;
+		std::cout << "Exception was thrown: " << e.what() << std::endl;
 		exceptionWasThrown = true;
 	}
 	
