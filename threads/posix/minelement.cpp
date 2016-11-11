@@ -15,6 +15,7 @@ RaIter minElement(RaIter begin, const RaIter end) {
 }
 
 
+/// Вспомогательная структура для передачи аргументов в функцию потока
 typedef std::vector<int> VecInt;
 typedef VecInt::iterator Iterator;
 struct ThreadHelper {
@@ -23,6 +24,7 @@ struct ThreadHelper {
 	Iterator min;
 };
 
+/// Такова должна быть сигнатура функции для вызова в отдельном POSIX-потоке
 void* minElementPthread(void* arg) {
 	ThreadHelper* helper = (ThreadHelper*)(arg);
 	helper->min = minElement(helper->first, helper->last);
@@ -73,8 +75,11 @@ int main() {
 			std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() / 1e+6 << std::endl;
 	
 	
+	/// С помощью стандартной библиотеки
 	t1 = std::chrono::high_resolution_clock::now();
+
 	Iterator minStd = std::min_element(v.begin(), v.end());
+
 	t2 = std::chrono::high_resolution_clock::now();
 	std::cout << "Time of standard library calculation, seconds = " <<
 			std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() / 1e+6 << std::endl;
