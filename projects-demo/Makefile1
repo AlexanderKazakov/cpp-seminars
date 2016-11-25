@@ -1,0 +1,12 @@
+# Формат Makefile (во второй строчке обязателен Tab вначале):
+# цель: зависимости
+# 	инструкции
+
+all: src/main.cpp src/libdemo/a/A.cpp src/libdemo/b/B.cpp
+	g++ src/main.cpp src/libdemo/a/A.cpp src/libdemo/b/B.cpp  -Isrc/ -lm
+
+hello:
+	echo "hello"
+
+clean:
+	rm -f a.out

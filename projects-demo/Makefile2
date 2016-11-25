@@ -1,0 +1,23 @@
+# Объявляем переменные
+INCLUDE_FLAGS=-Isrc
+COMPILER_FLAGS=-c -std=c++11 $(INCLUDE_FLAGS)
+LINKER_FLAGS=-lm
+SOURCES=src/libdemo/b/B.cpp src/libdemo/a/A.cpp src/main.cpp
+OBJECTS=src/libdemo/b/B.o src/libdemo/a/A.o src/main.o
+EXECUTABLE=executable
+
+# Правило для сборки executable
+$(EXECUTABLE): $(OBJECTS)
+	g++ $(OBJECTS) -o $(EXECUTABLE) $(LINKER_FLAGS)
+
+# Правило для сборки всех ".o" из ".cpp"
+# $^ -- зависимости (то, что подано на вход)
+# $@ -- цель (то, что будет собираться)
+.cpp.o:
+	g++ $^ -o $@ $(COMPILER_FLAGS)
+
+clean:
+	rm -f $(EXECUTABLE) $(OBJECTS)
+	
+
+

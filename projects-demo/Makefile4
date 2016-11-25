@@ -1,0 +1,35 @@
+CC=g++
+OPTIMIZATION_FLAGS=-O3
+WARNINGS_FLAGS=-Wall -Wextra -pedantic
+INCLUDE_FLAGS=-Isrc
+# "-fPIC" -- Position Independent Code -- флаг используется при создании динамических библиотек
+COMPILER_FLAGS=-c -fPIC -std=c++11 $(OPTIMIZATION_FLAGS) $(INCLUDE_FLAGS) $(WARNINGS_FLAGS)
+LINKER_FLAGS=-lm -fPIC $(OPTIMIZATION_FLAGS) $(WARNINGS_FLAGS)
+SOURCE_DIR=src
+LIB_DIR=$(SOURCE_DIR)/libdemo
+CURRENT_DIR=$(shell pwd)
+
+MAIN=$(SOURCE_DIR)/main.cpp
+SOURCES=$(shell find $(LIB_DIR) -name *.cpp)
+
+MAIN_OBJ=$(MAIN:.cpp=.o)
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=executable
+# Динамические библиотеки в linux имеют расширение ".so"
+SHARED_LIBRARY=libdemo.so
+
+# -Wl,options -- передать options линковщику
+# -rpath=... -- Runtime Path -- путь к динамической библиотеке
+$(EXECUTABLE): $(MAIN_OBJ) $(SHARED_LIBRARY)
+	$(CC) $^ -o $@ $(LINKER_FLAGS) -Wl,-rpath=$(CURRENT_DIR)
+
+# Флаг "-shared" -- инструкция создать динамическую библиотеку
+$(SHARED_LIBRARY): $(OBJECTS)
+	$(CC) -shared $^ -o $@ $(LINKER_FLAGS)
+
+.cpp.o:
+	$(CC) $^ -o $@ $(COMPILER_FLAGS)
+
+clean:
+	rm -f $(MAIN_OBJ) $(OBJECTS) $(EXECUTABLE) $(SHARED_LIBRARY)
+
