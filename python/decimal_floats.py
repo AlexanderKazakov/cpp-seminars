@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from decimal import *
-print('dec:', round(Decimal('0.70') * Decimal('1.05'), 2))
-print('bin:', round(.70 * 1.05, 2))
+
+print(round(0.735, 2))
+print(Decimal('0.735').quantize(Decimal('0.01')))
 
 print('dec:', sum([Decimal('0.1')]*10) == Decimal('1.0'))
 print('bin:', sum([0.1]*10) == 1.0)
