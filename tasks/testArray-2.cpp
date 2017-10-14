@@ -70,6 +70,12 @@ void testConstructorsAndAssignment() {
 	
 	b = b;
 	assert(b == e);
+	
+	IntArray oldA = a;
+	IntArray oldB = b;
+	swap(a, b);
+	assert(b == oldA);
+	assert(a == oldB);
 }
 
 
