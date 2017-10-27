@@ -2,6 +2,12 @@
 #include <iostream>
 #include "IntArray.hpp"
 
+// А так можно посмотреть на работу программы, если в качестве 
+// IntArray будет использован std::vector<int> 
+// (закомментив сначала #include "IntArray.hpp"):
+// #include <vector>
+// using IntArray = std::vector<int>;
+
 /// Задание по курсу. Написать класс-обёртку вокруг динамического массива целых чисел
 /// Реализовать класс хранения данных, поддерживающий все операции, чтобы программа компилировалась
 /// и отрабатывала без ошибок.
@@ -64,6 +70,8 @@ void testAccess() {
 	b.assign({7, 7, 7, 7, 7});
 	assert(b[4] == 7);
 	assert(b.at(4) == 7);
+	b.assign(a.begin(), a.end());
+	assert(b == a);
 	b.clear();
 	assert(b.size() == 0);
 }
@@ -81,6 +89,47 @@ void testPushPop() {
 }
 
 
+void testIteration() {
+	IntArray a;
+	assert(a.begin() == a.end());
+	assert(a.rbegin() == a.rend());
+	
+	a = IntArray(10000);
+	for (int i = 0; i < 10000; i++) {
+		a[i] = i;
+	}
+	
+	int counter = 0;
+	IntArray::iterator aIter;
+	for (aIter = a.begin(); aIter != a.end(); ++aIter) {
+		assert(*aIter == counter);
+		++counter;
+	}
+	
+	for (IntArray::reverse_iterator aReverseIter = a.rbegin();
+			aReverseIter != a.rend(); ++aReverseIter) {
+		--counter;
+		--aIter;
+		assert(*aReverseIter == counter);
+	}
+	assert(aIter == a.begin());
+}
+
+
+void testIterationConstness() {
+	IntArray a(10);
+	int counter = 0;
+	for (auto& i : a) {
+		i = counter++;
+	}
+	const IntArray b = a;
+	counter = 0;
+	for (const auto& i : b) {
+		counter += i;
+	}
+	assert(counter == 45);
+}
+
 
 int main() {
 	
@@ -88,6 +137,8 @@ int main() {
 	testOperators();
 	testAccess();
 	testPushPop();
+	testIteration();
+	testIterationConstness();
 	
 	return 0;
 }
