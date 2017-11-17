@@ -171,7 +171,11 @@ void testIterationConstness() {
 		*iter = counter++;
 	}
 	const IntArray b = a;
-	
+	counter = 0;
+        for (const auto& i : b) {
+                counter += i;
+        }
+        assert(counter == 45);	
 }
 
 
