@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip> // форматирование ввода-вывода
 #include <fstream> // чтение или запись в файл
 /// или ifstream -- для чтения
 /// или ofstream -- для записи
@@ -24,12 +23,8 @@ int main() {
     fs.open("fileToWrite.txt", ios_base::out | ios_base::app);
     check(fs.is_open(), "Не могу открыть файл на запись");
     for (int i = 0; i < 7; i++) {
-        fs << setprecision(i) << fixed << 12.345 << endl;
+        fs << i << endl;
     }
-    for (int i = 0; i < 7; i++) {
-        fs << setprecision(i) << scientific << 12.345 << endl;
-    }
-    /// Для более тонкого форматирования используется сишный fprintf
     
     fs.close();
     /// в данном случае .close() в принципе не обязательна:
