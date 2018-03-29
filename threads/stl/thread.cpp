@@ -12,7 +12,7 @@ int main() {
 	int v = 0;
 	/// Передача по ссылке требует явного приведения -- std::ref()
 	std::thread t(threadFunction, 3, std::ref(v));
-	t.join();
+	t.detach();
 	std::cout << "In main(): v == " << v << std::endl;
 	return 0;
 }
