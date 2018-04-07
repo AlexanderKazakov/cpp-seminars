@@ -4,6 +4,12 @@
 
 // from cppreference.com
 
+// unique_lock -- более функциональная версия lock_guard, позволяет:
+// - Принимать не захваченный мьютекс в конструкторе
+// - Захватывать и освобождать мьютекс непосредственными вызовами lock/unlock
+// - Выполнять временный захват
+// - Может быть перемещен в другой объект unique_lock
+
 struct Box {
     explicit Box(int num) : num_things{num} {}
     int num_things;

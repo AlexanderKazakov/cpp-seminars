@@ -4,9 +4,15 @@
 using namespace std;
 
 
-void foo(int i) { cout << this_thread::get_id() << " foo(), i == " << i << endl; }
+void foo(int i) {
+    cout << this_thread::get_id() << " foo(), i == " << i << endl;
+}
 
-struct Bar { void operator()() { cout << this_thread::get_id() << " Bar::operator()" << endl; } };
+struct Bar {
+    void operator()() {
+        cout << this_thread::get_id() << " Bar::operator()" << endl;
+    }
+};
 
 int main() {
     cout << this_thread::get_id() << " start main()" << endl;
@@ -16,11 +22,11 @@ int main() {
     
     Bar bar;
     thread t3(bar);
-    t3.join();
     
-    thread t4([](){
+    thread t4([]() {
         cout << this_thread::get_id() << " lambda-function" << endl;
     });
+    t3.join();
     t4.join();
     
     cout << this_thread::get_id() << " end main()" << endl;

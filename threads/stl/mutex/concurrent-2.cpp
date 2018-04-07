@@ -1,34 +1,42 @@
 #include <iostream>
 #include <thread>
+#include <mutex>
 
 using namespace std;
 
 
 struct S {
     int get_a() const {
+        lock_guard<mutex> lg(m);
         return _a;
     }
     void set_a(int a) {
+        lock_guard<mutex> lg(m);
         _a = a;
     }
     int get_b() const {
+        lock_guard<mutex> lg(m);
         return _b;
     }
     void set_b(int b) {
+        lock_guard<mutex> lg(m);
         _b = b;
     }
     void set_a_b(int a, int b) {
+        lock_guard<mutex> lg(m);
         set_a(a);
         this_thread::sleep_for(chrono::milliseconds(100));
         set_b(b);
     }
     int sum() const {
+        lock_guard<mutex> lg(m);
         int a = get_a();
         this_thread::sleep_for(chrono::milliseconds(100));
         return a + get_b();
     }
 private:
     int _a = 0, _b = 0;
+    mutex m;
 };
 
 int main() {

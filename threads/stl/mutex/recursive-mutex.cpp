@@ -8,8 +8,7 @@ using namespace std;
 struct S {
     int get_a() const {
         lock_guard<recursive_mutex> lg(m);
-        int ans = _a;
-        return ans;
+        return _a;
     }
     void set_a(int a) {
         lock_guard<recursive_mutex> lg(m);
@@ -17,8 +16,7 @@ struct S {
     }
     int get_b() const {
         lock_guard<recursive_mutex> lg(m);
-        int ans = _b;
-        return ans;
+        return _b;
     }
     void set_b(int b) {
         lock_guard<recursive_mutex> lg(m);

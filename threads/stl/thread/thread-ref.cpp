@@ -12,8 +12,8 @@ int main() {
     t1.join();
     cout << i << endl;
     
-    // thread t2([](int& j){ ++j; }, i); -- compilation error
-    thread t2([](int& j){ ++j; }, std::ref(i));
+//     thread t2([](int& j){ ++j; }, i); // -- compilation error
+    thread t2([](int& j){ ++j; }, ref(i));
     t2.join();
     cout << i << endl;
     

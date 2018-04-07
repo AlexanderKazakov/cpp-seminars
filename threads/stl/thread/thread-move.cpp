@@ -5,18 +5,19 @@ using namespace std;
 
 
 int main() {
-    cout << "start main()" << endl;
-    
     thread t1([]() {
         cout << "t1 start" << endl;
         this_thread::sleep_for(chrono::milliseconds(1000));
         cout << "t1 end" << endl;
     });
-    this_thread::sleep_for(chrono::milliseconds(500));
-//    t1.join();
-//    t1.detach();
     
-    cout << "end main()" << endl;
+    thread t2([](thread t) {
+        cout << "t2 start" << endl;
+        t.join();
+        cout << "t2 end" << endl;
+    }, move(t1));
+    t2.join();
+    
     return 0;
 }
 
