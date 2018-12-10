@@ -1,0 +1,4 @@
+PARAM(length)
+PARAM(clock)
+PARAM(weight)
+PARAM(charge)
